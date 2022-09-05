@@ -3,8 +3,9 @@ package br.com.dev.thiagomds.catalogo_produtos.model;
 
 import javax.persistence.*;
 
-@Table(uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"code"})
+@Table(
+        uniqueConstraints = {
+            @UniqueConstraint(columnNames = {"code"})
     }
 )
 @Entity
@@ -24,6 +25,9 @@ public class Product {
     private String code;
 
     private float price;
+
+    @Column(length = 12, nullable = false)
+    private String color;
 
     public long getId() {
         return id;
@@ -64,4 +68,7 @@ public class Product {
     public void setPrice(float price) {
         this.price = price;
     }
+
+    public String getColor() {return color; }
+    public void setColor(String color) { this.color = color; }
 }

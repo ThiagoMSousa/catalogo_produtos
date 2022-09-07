@@ -1,8 +1,10 @@
 package br.com.dev.thiagomds.catalogo_produtos.model;
 
+import br.com.dev.thiagomds.catalogo_produtos.enums.EventType;
+
 public class Envelope {
 
-    private String eventType;
+    private EventType eventType;
     private String data;
 
     public String getData() {
@@ -13,11 +15,11 @@ public class Envelope {
         this.data = data;
     }
 
-    public String getEventType() {
+    public EventType getEventType() {
         return eventType;
     }
 
-    public void setEventType(String eventType) {
+    public void setEventType(EventType eventType) {
         this.eventType = eventType;
     }
 }

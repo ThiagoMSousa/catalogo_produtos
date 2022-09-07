@@ -1,7 +1,9 @@
 package br.com.dev.thiagomds.catalogo_produtos.controller;
 
+import br.com.dev.thiagomds.catalogo_produtos.enums.EventType;
 import br.com.dev.thiagomds.catalogo_produtos.model.Product;
 import br.com.dev.thiagomds.catalogo_produtos.repository.ProductRepository;
+import br.com.dev.thiagomds.catalogo_produtos.service.ProductPublisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +16,12 @@ import java.util.Optional;
 public class ProductController {
 
     private ProductRepository productRepository;
+    private ProductPublisher productPublisher;
 
     @Autowired
-    public ProductController(ProductRepository productRepository) {
+    public ProductController(ProductRepository productRepository, ProductPublisher productPublisher) {
         this.productRepository = productRepository;
+        this.productPublisher = productPublisher;
     }
 
     @GetMapping
@@ -40,6 +44,7 @@ public class ProductController {
             @RequestBody Product product) {
         Product productCreated = productRepository.save(product);
 
+        productPublisher.publisherProductEvent(productCreated, EventType.PRODUCT_CREATED, "Teste Inclusão");
         return new ResponseEntity<Product>(productCreated,
                 HttpStatus.CREATED);
     }
@@ -51,6 +56,8 @@ public class ProductController {
             product.setId(id);
 
             Product productUpdated = productRepository.save(product);
+
+            productPublisher.publisherProductEvent(productUpdated, EventType.PRODUCT_UPDATED, "Teste Alteração");
 
             return new ResponseEntity<Product>(productUpdated,
                     HttpStatus.OK);
@@ -66,6 +73,8 @@ public class ProductController {
             Product product = optProduct.get();
 
             productRepository.delete(product);
+
+            productPublisher.publisherProductEvent(product, EventType.PRODUCT_DELETED, "Teste Deleção");
 
             return new ResponseEntity<Product>(product, HttpStatus.OK);
         } else {

@@ -4,6 +4,8 @@ import br.com.dev.thiagomds.catalogo_produtos.enums.EventType;
 import br.com.dev.thiagomds.catalogo_produtos.model.Product;
 import br.com.dev.thiagomds.catalogo_produtos.repository.ProductRepository;
 import br.com.dev.thiagomds.catalogo_produtos.service.ProductPublisher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,8 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ProductController.class);
 
     private ProductRepository productRepository;
     private ProductPublisher productPublisher;
@@ -44,9 +48,9 @@ public class ProductController {
             @RequestBody Product product) {
         Product productCreated = productRepository.save(product);
 
-        productPublisher.publisherProductEvent(productCreated, EventType.PRODUCT_CREATED, "Teste Inclusão");
-        return new ResponseEntity<Product>(productCreated,
-                HttpStatus.CREATED);
+        productPublisher.publishProductEvent(productCreated, EventType.PRODUCT_CREATE, "Teste Inclusão");
+
+        return new ResponseEntity<Product>(productCreated, HttpStatus.CREATED);
     }
 
     @PutMapping(path = "/{id}")
@@ -57,10 +61,9 @@ public class ProductController {
 
             Product productUpdated = productRepository.save(product);
 
-            productPublisher.publisherProductEvent(productUpdated, EventType.PRODUCT_UPDATED, "Teste Alteração");
+            productPublisher.publishProductEvent(productUpdated, EventType.PRODUCT_UPDATE, "doralice");
 
-            return new ResponseEntity<Product>(productUpdated,
-                    HttpStatus.OK);
+            return new ResponseEntity<Product>(productUpdated, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -74,7 +77,7 @@ public class ProductController {
 
             productRepository.delete(product);
 
-            productPublisher.publisherProductEvent(product, EventType.PRODUCT_DELETED, "Teste Deleção");
+            productPublisher.publishProductEvent(product, EventType.PRODUCT_DELETE, "hannah");
 
             return new ResponseEntity<Product>(product, HttpStatus.OK);
         } else {

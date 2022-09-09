@@ -32,7 +32,7 @@ public class ProductPublisher {
         this.objectMapper = objectMapper;
     }
 
-    public void publisherProductEvent(Product product,
+    public void publishProductEvent(Product product,
                                       EventType eventType,
                                       String userName) {
 
@@ -40,7 +40,7 @@ public class ProductPublisher {
         ProductEvent productEvent = new ProductEvent();
         productEvent.setProductId(product.getId());
         productEvent.setCode(product.getCode());
-        productEvent.setUsername(product.getName());
+        productEvent.setUsername(userName);
 
         // Evento de Envelope
         Envelope envelope = new Envelope();
@@ -53,6 +53,7 @@ public class ProductPublisher {
                     productEventsTopic.getTopicArn(),
                     objectMapper.writeValueAsString(envelope)
             );
+            LOG.info("Event Message Published\n\n"+ snsClient);
         } catch (JsonProcessingException e) {
             LOG.error("Failed to create product event message");
         }

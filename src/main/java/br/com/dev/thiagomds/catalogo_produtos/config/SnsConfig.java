@@ -13,10 +13,10 @@ import org.springframework.context.annotation.Profile;
 @Profile("!local")
 public class SnsConfig {
 
-    @Value("aws.region")
+    @Value("${aws.region}")
     private String awsRegion;
 
-    @Value("$aws.sns.topic.product.events.arn")
+    @Value("${aws.sns.topic.product.events.arn}")
     private String productEventsTopic;
 
     // SNS Client para permitir acesso ao tópico

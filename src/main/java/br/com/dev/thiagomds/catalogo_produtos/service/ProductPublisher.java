@@ -5,6 +5,7 @@ import br.com.dev.thiagomds.catalogo_produtos.model.Envelope;
 import br.com.dev.thiagomds.catalogo_produtos.model.Product;
 import br.com.dev.thiagomds.catalogo_produtos.model.ProductEvent;
 import com.amazonaws.services.sns.AmazonSNS;
+import com.amazonaws.services.sns.model.PublishResult;
 import com.amazonaws.services.sns.model.Topic;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -49,11 +50,16 @@ public class ProductPublisher {
         try {
             envelope.setData(objectMapper.writeValueAsString(productEvent));
 
-            snsClient.publish(
+            PublishResult publishResult = snsClient.publish(
                     productEventsTopic.getTopicArn(),
                     objectMapper.writeValueAsString(envelope)
             );
-            LOG.info("Event Message Published\n\n"+ snsClient);
+
+            LOG.info("Product event sent - EVENT: {} - ProductId: {} - MessageId: {} ",
+                envelope.getEventType(),
+                productEvent.getProductId(),
+                publishResult.getMessageId());
+
         } catch (JsonProcessingException e) {
             LOG.error("Failed to create product event message");
         }

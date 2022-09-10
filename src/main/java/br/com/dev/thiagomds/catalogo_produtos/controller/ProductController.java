@@ -48,7 +48,7 @@ public class ProductController {
             @RequestBody Product product) {
         Product productCreated = productRepository.save(product);
 
-        productPublisher.publishProductEvent(productCreated, EventType.PRODUCT_CREATE, "Teste Inclusão");
+        productPublisher.publishProductEvent(productCreated, EventType.PRODUCT_CREATED, "Teste Inclusão");
 
         return new ResponseEntity<Product>(productCreated, HttpStatus.CREATED);
     }
@@ -61,7 +61,7 @@ public class ProductController {
 
             Product productUpdated = productRepository.save(product);
 
-            productPublisher.publishProductEvent(productUpdated, EventType.PRODUCT_UPDATE, "doralice");
+            productPublisher.publishProductEvent(productUpdated, EventType.PRODUCT_UPDATED, "doralice");
 
             return new ResponseEntity<Product>(productUpdated, HttpStatus.OK);
         } else {
@@ -77,7 +77,7 @@ public class ProductController {
 
             productRepository.delete(product);
 
-            productPublisher.publishProductEvent(product, EventType.PRODUCT_DELETE, "hannah");
+            productPublisher.publishProductEvent(product, EventType.PRODUCT_DELETED, "hannah");
 
             return new ResponseEntity<Product>(product, HttpStatus.OK);
         } else {

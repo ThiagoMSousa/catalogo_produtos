@@ -57,6 +57,7 @@ dependencies {
 
 	implementation group: 'com.amazonaws', name: 'aws-java-sdk-sns', version: '1.11.887'
 	implementation group: 'com.amazonaws', name: 'aws-java-sdk-sqs', version: '1.11.887'
+	implementation group: 'com.amazonaws', name: 'aws-java-sdk-s3', version: '1.11.887'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

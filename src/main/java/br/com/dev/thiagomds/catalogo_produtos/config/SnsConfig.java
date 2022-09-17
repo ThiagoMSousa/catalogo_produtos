@@ -23,7 +23,9 @@ public class SnsConfig {
     @Bean
     public AmazonSNS snsClient(){
         return AmazonSNSClientBuilder.standard()
+                // Definindo Região
                 .withRegion(awsRegion)
+                // Definindo a Fonte de Credenciais de Acesso
                 .withCredentials(new DefaultAWSCredentialsProviderChain())
                 .build();
     }

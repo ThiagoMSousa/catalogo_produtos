@@ -28,7 +28,7 @@ sourceCompatibility = '11'
 
 bootJar{
 	baseName = 'catalogo_produtos'
-	version = '1.0.8'
+	version = '1.0.9'
 }
 
 repositories {

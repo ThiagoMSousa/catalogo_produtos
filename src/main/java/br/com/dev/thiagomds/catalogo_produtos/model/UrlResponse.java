@@ -3,7 +3,7 @@ package br.com.dev.thiagomds.catalogo_produtos.model;
 public class UrlResponse {
 
     private String url;
-    private String expirationTime;
+    private long expirationTime;
 
     public String getUrl() {
         return url;
@@ -13,11 +13,11 @@ public class UrlResponse {
         this.url = url;
     }
 
-    public String getExpirationTime() {
+    public long getExpirationTime() {
         return expirationTime;
     }
 
-    public void setExpirationTime(String expirationTime) {
+    public void setExpirationTime(long expirationTime) {
         this.expirationTime = expirationTime;
     }
 }
